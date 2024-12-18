@@ -56,12 +56,9 @@ public class ArraySum {
 
         @Override
         public void run() {
-            if (THREAD_SLEEP_MS > 0) {
-                try {
-                    Thread.sleep(THREAD_SLEEP_MS);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
+            long endTime = System.nanoTime() + THREAD_SLEEP_MS * 1_000_000L;
+            while (System.nanoTime() < endTime) {
+                // Busy-wait: keep the CPU fully utilized
             }
 
             for (int i = start; i < end; i++) partialSum += array[i];
