@@ -1,5 +1,5 @@
 public class ArraySum {
-    private static final int ARRAY_SIZE = Integer.MAX_VALUE;
+    private static final int ARRAY_SIZE = 1 << 28;
     private static final int NUM_THREADS = 16;
     private static final int THREAD_SLEEP_MS = 0;
 
@@ -25,10 +25,13 @@ public class ArraySum {
             int end = (i == NUM_THREADS - 1) ? array.length : (i + 1) * partSize;
             sumThreads[i] = new SumThread(array, start, end);
             threads[i] = new Thread(sumThreads[i]);
-            threads[i].start();
         }
         endTime = System.nanoTime();
         System.out.printf("Step 3: %-40s | Time: %10d μs%n", "Thread creation", (endTime - startTime) / 1000);
+
+        for (int i = 0; i < NUM_THREADS; i++) {
+            threads[i].start();
+        }
 
         long totalSum = 0;
 
