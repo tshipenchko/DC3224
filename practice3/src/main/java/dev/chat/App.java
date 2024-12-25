@@ -1,6 +1,7 @@
 package dev.chat;
 
 import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import java.util.Scanner;
 
 public class App {
@@ -13,7 +14,7 @@ public class App {
             System.out.print("Enter your username: ");
             username = scanner.nextLine();
 
-            MqttClient client = new MqttClient(BROKER_URL, "ChatClient_" + System.currentTimeMillis());
+            MqttClient client = new MqttClient(BROKER_URL, "ChatClient_" + System.currentTimeMillis(), new MemoryPersistence());
             MqttConnectOptions options = new MqttConnectOptions();
             options.setCleanSession(true);
 
