@@ -21,17 +21,15 @@ public class App {
             client.connect(options);
             System.out.println("Connected to the local MQTT broker.");
 
-            // Subscribe to the chat topic
             client.subscribe(TOPIC, (topic, message) -> {
                 String receivedMessage = new String(message.getPayload());
-                // Ignore own message
                 if (!receivedMessage.startsWith(username + ">")) {
-                    displayMessage(receivedMessage);  // Print message if not sent by the current user
+                    displayMessage(receivedMessage);
                 }
             });
 
             System.out.println("Type 'exit' to quit.");
-            System.out.print("> ");  // Initial input prompt
+            System.out.print("> ");
             while (true) {
                 String userInput = scanner.nextLine();
                 if ("exit".equalsIgnoreCase(userInput)) {
@@ -39,7 +37,7 @@ public class App {
                 }
                 String message = username + "> " + userInput;
                 client.publish(TOPIC, new MqttMessage(message.getBytes()));
-                System.out.print("\r> ");  // Reprint the input prompt on the same line
+                System.out.print("\r> ");
             }
 
             client.disconnect();
@@ -50,9 +48,8 @@ public class App {
         }
     }
 
-    // Print the incoming message, ensuring the prompt remains fixed at the bottom
     private static void displayMessage(String message) {
-        System.out.println("\r" + message);  // Print message with a new line
-        System.out.print("> ");  // Ensure the prompt stays at the bottom after message display
+        System.out.println("\r" + message);
+        System.out.print("> ");
     }
 }
