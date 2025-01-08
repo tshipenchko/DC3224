@@ -5,7 +5,7 @@
     <artifactId>midterm</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>practice3</name>
+    <name>midterm</name>
     <url>http://maven.apache.org</url>
     <dependencies>
     </dependencies>
