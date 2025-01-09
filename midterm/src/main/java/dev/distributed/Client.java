@@ -29,7 +29,6 @@ public class Client {
                 task.setNumbers(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 
                 try {
-                    String taskJson = objectMapper.writeValueAsString(task);
                     Task[] subtasks = task.distribute(4);
 
                     while (true) {
