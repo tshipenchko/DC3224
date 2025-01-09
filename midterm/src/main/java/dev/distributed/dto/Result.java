@@ -17,4 +17,6 @@ public abstract class Result {
     private long executionTimeMs;
     private int threadsUsed;
     private double cpuLoad;
+
+    public abstract Task generateTask();
 }

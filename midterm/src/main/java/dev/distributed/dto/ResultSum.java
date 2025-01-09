@@ -7,4 +7,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ResultSum extends Result {
     private int sum;
+
+    @Override
+    public Task generateTask() {
+        return new TaskSum();
+    }
 }

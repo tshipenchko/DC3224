@@ -36,6 +36,7 @@ public class TaskSum extends Task {
 
         ResultSum resultSum = new ResultSum();
         resultSum.setId(getId());
+        resultSum.setPartId(getPartId());
         resultSum.setExecutionTimeMs(end - start);
         resultSum.setThreadsUsed(1);
         resultSum.setCpuLoad(0.5);
@@ -52,6 +53,7 @@ public class TaskSum extends Task {
 
         ResultSum resultSum = new ResultSum();
         resultSum.setId(getId());
+        resultSum.setPartId(getPartId());
         resultSum.setExecutionTimeMs(System.currentTimeMillis());
         resultSum.setThreadsUsed(1);
         resultSum.setCpuLoad(0.5);

@@ -8,4 +8,9 @@ import lombok.EqualsAndHashCode;
 public class ResultAverage extends Result {
     private int sum;
     private int count;
+
+    @Override
+    public Task generateTask() {
+        return new TaskAverage();
+    }
 }

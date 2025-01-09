@@ -25,6 +25,7 @@ public class TaskAverage extends Task {
 
         ResultAverage resultAverage = new ResultAverage();
         resultAverage.setId(getId());
+        resultAverage.setPartId(getPartId());
         resultAverage.setExecutionTimeMs(System.currentTimeMillis());
         resultAverage.setThreadsUsed(1);
         resultAverage.setCpuLoad(0.5);
@@ -42,6 +43,7 @@ public class TaskAverage extends Task {
 
         ResultAverage resultAverage = new ResultAverage();
         resultAverage.setId(getId());
+        resultAverage.setPartId(getPartId());
         resultAverage.setExecutionTimeMs(System.currentTimeMillis());
         resultAverage.setThreadsUsed(1);
         resultAverage.setCpuLoad(0.5);
