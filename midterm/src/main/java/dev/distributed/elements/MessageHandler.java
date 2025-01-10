@@ -27,12 +27,12 @@ public class MessageHandler {
 
     @SuppressWarnings("CallToPrintStackTrace")
     public void start() {
-        //noinspection InfiniteLoopStatement
         while (true) {
             try {
                 process();
             } catch (Exception e) {
                 e.printStackTrace();
+                System.exit(1);
             }
         }
     }

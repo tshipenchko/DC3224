@@ -3,6 +3,9 @@ package dev.distributed.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class TaskAverage extends Task {
@@ -10,7 +13,20 @@ public class TaskAverage extends Task {
 
     @Override
     public Task[] distribute(int parts) {
-        return new Task[]{};
+        TaskAverage[] tasks = new TaskAverage[parts];
+        int partSize = numbers.length / parts;
+        int remainder = numbers.length % parts;
+        int start = 0;
+        for (int i = 0; i < parts; i++) {
+            TaskAverage taskAverage = new TaskAverage();
+            taskAverage.setId(getId());
+            taskAverage.setPartId(i);
+            int currentPartSize = partSize + (i < remainder ? 1 : 0);
+            taskAverage.setNumbers(Arrays.copyOfRange(numbers, start, start + currentPartSize));
+            start += currentPartSize;
+            tasks[i] = taskAverage;
+        }
+        return tasks;
     }
 
     @Override
@@ -26,9 +42,17 @@ public class TaskAverage extends Task {
         ResultAverage resultAverage = new ResultAverage();
         resultAverage.setId(getId());
         resultAverage.setPartId(getPartId());
-        resultAverage.setExecutionTimeMs(System.currentTimeMillis());
-        resultAverage.setThreadsUsed(1);
-        resultAverage.setCpuLoad(0.5);
+        resultAverage.setExecutionTimeMs((long) Arrays.stream(partialResults)
+                .mapToLong(Result::getExecutionTimeMs)
+                .average()
+                .orElse(0.0));
+        resultAverage.setThreadsUsed(Arrays.stream(partialResults)
+                .mapToInt(Result::getThreadsUsed)
+                .sum());
+        resultAverage.setCpuLoad(Arrays.stream(partialResults)
+                .mapToDouble(Result::getCpuLoad)
+                .average()
+                .orElse(0.0));
         resultAverage.setSum(totalSum);
         resultAverage.setCount(totalCount);
         return resultAverage;
@@ -36,17 +60,23 @@ public class TaskAverage extends Task {
 
     @Override
     public Result compute() {
+        long start = System.nanoTime();
         int sum = 0;
         for (int num : numbers) {
             sum += num;
         }
+        long end = System.nanoTime();
+
+        com.sun.management.OperatingSystemMXBean osBean =
+                (com.sun.management.OperatingSystemMXBean) java.lang.management.ManagementFactory.getOperatingSystemMXBean();
+        double cpuLoad = osBean.getProcessCpuLoad();
 
         ResultAverage resultAverage = new ResultAverage();
         resultAverage.setId(getId());
         resultAverage.setPartId(getPartId());
-        resultAverage.setExecutionTimeMs(System.currentTimeMillis());
+        resultAverage.setExecutionTimeMs(end - start);
         resultAverage.setThreadsUsed(1);
-        resultAverage.setCpuLoad(0.5);
+        resultAverage.setCpuLoad(cpuLoad);
         resultAverage.setSum(sum);
         resultAverage.setCount(numbers.length);
         return resultAverage;

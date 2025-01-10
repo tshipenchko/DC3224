@@ -13,4 +13,18 @@ public class ResultAverage extends Result {
     public Task generateTask() {
         return new TaskAverage();
     }
+
+    @Override
+    public String toString() {
+        return "ResultAverage{" +
+                "average=" + (double) sum / count +
+                ", sum=" + sum +
+                ", count=" + count +
+                ", id=" + getId() +
+                ", partId=" + getPartId() +
+                ", executionTimeMs=" + getExecutionTimeMs() / 1000000.0 +
+                ", threadsUsed=" + getThreadsUsed() +
+                ", cpuLoad=" + getCpuLoad() +
+                '}';
+    }
 }

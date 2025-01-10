@@ -36,7 +36,7 @@ public class UI {
     @SuppressWarnings("CallToPrintStackTrace")
     private void process() {
         System.out.println("1: TaskSum");
-        System.out.println("2: TaskMultiply");
+        System.out.println("2: TaskAverage");
 
         System.out.print("Choose task type: ");
         String taskType = scanner.nextLine();
@@ -87,7 +87,7 @@ public class UI {
     }
 
     private void distributeTask(Task task) throws JsonProcessingException {
-        System.out.println("Enter the distribution factor (default 4): ");
+        System.out.println("Enter the distribution factor: ");
         int factor = Integer.parseInt(scanner.nextLine());
         if (factor <= 0) factor = 4;
 
@@ -111,6 +111,7 @@ public class UI {
     }
 
     private void waitForResults() {
+        long start = System.currentTimeMillis();
         System.out.println("Waiting for results...");
 
         try {
@@ -119,6 +120,8 @@ public class UI {
 
             while (received < distributionFactor) {
                 result = resultQueue.take();
+
+                System.out.println("Received: " + result);
 
                 if (!Objects.equals(result.getId(), currentTask.getId())) {
                     continue;
@@ -130,6 +133,9 @@ public class UI {
 
             Result finalResult = currentTask.join(results);
             System.out.println("Final Result: " + finalResult);
+
+            long end = System.currentTimeMillis();
+            System.out.println("Total execution time: " + (end - start) + "ms");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -12,4 +12,16 @@ public class ResultSum extends Result {
     public Task generateTask() {
         return new TaskSum();
     }
+
+    @Override
+    public String toString() {
+        return "ResultSum{" +
+                "sum=" + sum +
+                ", id=" + getId() +
+                ", partId=" + getPartId() +
+                ", executionTimeMs=" + getExecutionTimeMs() / 1000000.0 +
+                ", threadsUsed=" + getThreadsUsed() +
+                ", cpuLoad=" + getCpuLoad() +
+                '}';
+    }
 }
