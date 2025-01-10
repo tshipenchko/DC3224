@@ -19,7 +19,7 @@ public class ResultSum extends Result {
                 "sum=" + sum +
                 ", id=" + getId() +
                 ", partId=" + getPartId() +
-                ", executionTimeMs=" + getExecutionTimeMs() / 1000000.0 +
+                ", executionTimeMs=" + getExecutionTimeNs() / 1000000.0 +
                 ", threadsUsed=" + getThreadsUsed() +
                 ", cpuLoad=" + getCpuLoad() +
                 '}';

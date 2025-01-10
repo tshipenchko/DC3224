@@ -14,7 +14,7 @@ public abstract class Result {
     private String id;
     private int partId;
 
-    private long executionTimeMs;
+    private long executionTimeNs;
     private int threadsUsed;
     private double cpuLoad;
 

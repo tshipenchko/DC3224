@@ -39,8 +39,8 @@ public class TaskSum extends Task {
         ResultSum resultSum = new ResultSum();
         resultSum.setId(getId());
         resultSum.setPartId(getPartId());
-        resultSum.setExecutionTimeMs((long) Arrays.stream(partialResults)
-                .mapToLong(Result::getExecutionTimeMs)
+        resultSum.setExecutionTimeNs((long) Arrays.stream(partialResults)
+                .mapToLong(Result::getExecutionTimeNs)
                 .average()
                 .orElse(0.0));
         resultSum.setThreadsUsed(Arrays.stream(partialResults)
@@ -70,7 +70,7 @@ public class TaskSum extends Task {
         ResultSum resultSum = new ResultSum();
         resultSum.setId(getId());
         resultSum.setPartId(getPartId());
-        resultSum.setExecutionTimeMs(end - start);
+        resultSum.setExecutionTimeNs(end - start);
         resultSum.setThreadsUsed(1);
         resultSum.setCpuLoad(cpuLoad);
         resultSum.setSum(sum);

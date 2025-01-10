@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -42,8 +41,8 @@ public class TaskAverage extends Task {
         ResultAverage resultAverage = new ResultAverage();
         resultAverage.setId(getId());
         resultAverage.setPartId(getPartId());
-        resultAverage.setExecutionTimeMs((long) Arrays.stream(partialResults)
-                .mapToLong(Result::getExecutionTimeMs)
+        resultAverage.setExecutionTimeNs((long) Arrays.stream(partialResults)
+                .mapToLong(Result::getExecutionTimeNs)
                 .average()
                 .orElse(0.0));
         resultAverage.setThreadsUsed(Arrays.stream(partialResults)
@@ -74,7 +73,7 @@ public class TaskAverage extends Task {
         ResultAverage resultAverage = new ResultAverage();
         resultAverage.setId(getId());
         resultAverage.setPartId(getPartId());
-        resultAverage.setExecutionTimeMs(end - start);
+        resultAverage.setExecutionTimeNs(end - start);
         resultAverage.setThreadsUsed(1);
         resultAverage.setCpuLoad(cpuLoad);
         resultAverage.setSum(sum);
