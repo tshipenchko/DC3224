@@ -56,9 +56,7 @@ class ClientHandler implements Runnable {
                         Result result = objectMapper.readValue(message, Result.class);
                         // Broadcast result to all clients
                         for (PrintWriter client : clients) {
-                            if (client != out) {
-                                client.println(objectMapper.writeValueAsString(result));
-                            }
+                            client.println(objectMapper.writeValueAsString(result));
                         }
                     } catch (Exception ex) {
                         System.err.println("Error processing message: " + message);
