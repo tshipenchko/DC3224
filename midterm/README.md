@@ -45,42 +45,6 @@ The application employs a client-server architecture where the server acts solel
 
 ---
 
-### **3. Reporting**
-
-Results are transmitted via REST API in JSON format, which includes the following structure:
-
-```json
-{
-    "task_id": "b6c5e42a-9f56-4d78-bb2e-2f1f8c6e1c8b",
-    "client_id": "client1",
-    "result": {
-        "value": 55,
-        "metadata": {
-            "cpu_load": "65%",
-            "threads": 4,
-            "execution_time_ms": 1200
-        }
-    }
-}
-```
-
----
-
-### **4. Significant System Load**
-
-#### **Testing Scenarios**
-
-| **Scenario**              | **Result**                  |
-|---------------------------|-----------------------------|
-| Single Node (Baseline)    | Execution time: 1500ms     |
-| 4 Nodes (Distributed)     | Execution time: 1200ms     |
-| Large Dataset (~1GB)      | Required memory optimization |
-| Gradual Load Increase     | Linear degradation in performance |
-
-Data volumes exceeded single-node RAM capacity, necessitating multithreading and optimized resource allocation.
-
----
-
 ### **5. Execution Example**
 
 #### **Task:** `sum 1 2 3 4 5 6 7 8 9 10`
@@ -124,18 +88,3 @@ sequenceDiagram
 
 #### **Service Data Transmission**
 Service data, including task assignments and results, is transmitted using WebSocket to ensure low latency and persistent connections. This approach reduces overhead compared to traditional HTTP communication.
-
----
-
-### **Grading Policy Summary**
-
-| **Criteria**                       | **Maximum Points** | **Achieved Points** |
-|------------------------------------|--------------------|---------------------|
-| Understanding Technologies and Architecture | 35                 | 32                  |
-| Code Quality                       | 25                 | 22                  |
-| Report Quality                     | 15                 | 13                  |
-| Load Testing and Analysis          | 25                 | 23                  |
-| **Total Score**                    | **100**            | **90**              |
-
----
-
