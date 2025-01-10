@@ -4,7 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.distributed.dto.*;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -136,8 +140,61 @@ public class UI {
 
             long end = System.currentTimeMillis();
             System.out.println("Total execution time: " + (end - start) + "ms");
+
+            reportResult(finalResult);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void reportResult(Result result) {
+        int id = 42069;
+        int group = 2205;
+        int subgroup = 1;
+        int[] barcodes = {
+                220866,
+                221239,
+                221478,
+                221635,
+                221970,
+        };
+
+        try {
+            String jsonData = objectMapper.writeValueAsString(result);
+
+            Report report = new Report();
+            report.setId(id);
+            report.setGroup(group);
+            report.setSubgroup(subgroup);
+            report.setBarcodes(barcodes);
+            report.setJsonData(jsonData);
+
+            String reportJson = objectMapper.writeValueAsString(report);
+
+            String url = "http://ynurakhov-002-site2.itempurl.com/api/Midterm";
+
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Accept", "text/plain");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(reportJson.getBytes());
+                os.flush();
+            }
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
+                System.out.println("Reported successfully.");
+                try (InputStream is = connection.getInputStream()) {
+                    System.out.println("Response: " + new String(is.readAllBytes()));
+                }
+            } else {
+                System.out.println("Failed to report. Response Code: " + responseCode);
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
 }
