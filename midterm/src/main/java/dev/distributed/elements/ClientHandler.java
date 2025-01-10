@@ -21,6 +21,7 @@ public class ClientHandler implements Runnable {
         this.socket = socket;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     @Override
     public void run() {
         try (
