@@ -7,6 +7,8 @@ services:
       - "8080:8080"
     environment:
       - SPARK_MODE=master
+      - SPARK_MASTER_HOST=0.0.0.0  # Allow connections from all IPs
+      - SPARK_LOCAL_IP=0.0.0.0     # Listen on all network interfaces
     healthcheck:
       test: ["CMD", "curl", "-f", "http://spark-master:8080"]
       interval: 10s
