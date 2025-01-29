@@ -5,6 +5,7 @@ pkgs.mkShell {
 
   buildInputs = [
     pkgs.maven
-    pkgs.mosquitto
+#    pkgs.mosquitto
+# Uncomment line with mosquitto when it's needed
   ];
 }
